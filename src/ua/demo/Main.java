@@ -1,106 +1,66 @@
 package ua.demo;
 
 import ua.hotel_managment.*;
+import ua.hotel_managment.enums.*;
 import java.time.LocalDate;
-import ua.util.Utils;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== DEMONSTRATION OF GUEST AND ROOM CLASSES ===\n");
+        System.out.println("=== LAB 2: RECORDS, ENUMS & SWITCH EXPRESSIONS ===\n");
 
-        // --- 1. Створення об’єктів різними способами ---
-        System.out.println(">>> Creating objects in different ways:");
+        System.out.println(">>> Creating Guest and Service (Records):");
 
-        // через конструктор
-        Guest guest1 = new Guest(
-                "John",
-                "Doe",
-                "john.doe@example.com",
-                LocalDate.now().plusDays(1)
-        );
+        Guest guest = new Guest("John", "Wick", "john@continental.com", LocalDate.now().plusDays(1));
+        System.out.println("Guest Record created: " + guest.firstName() + " " + guest.lastName());
 
-        // через фабричний метод create()
-        Guest guest2 = Guest.create(
-                "Alice",
-                "Brown",
-                "alice.brown@example.com",
-                LocalDate.now().plusDays(2)
-        );
+        Service spa = new Service("Spa Access", 100);
+        Service dinner = new Service("Gourmet Dinner", 50);
+        System.out.println("Service Record created: " + spa.name() + " ($" + spa.price() + ")");
 
-        // створення кімнат різними способами
-        Room room1 = new Room(101, "Single", 1, 500.0);
-        Room room2 = Room.create(202, "Double", 2, 750.0);
+        System.out.println("\n>>> Creating Room and Reservation with Enums:");
 
-        System.out.println(guest1);
-        System.out.println(guest2);
-        System.out.println(room1);
-        System.out.println(room2);
+        Room room = new Room(305, "Suite", 2, 500.0, RoomStatus.AVAILABLE);
+        System.out.println("Room created: " + room);
 
-        // --- 2. Демонстрація валідації ---
-        System.out.println("\n>>> Demonstrating validation (successful and failed cases):");
+        Reservation reservation = new Reservation(guest, room, LocalDate.now().plusDays(1), LocalDate.now().plusDays(3));
+        reservation.addService(spa);
+        reservation.addService(dinner);
 
-        // успішний випадок
-        try {
-            Guest validGuest = new Guest("Emma", "White", "emma.white@example.com", LocalDate.now().plusDays(3));
-            System.out.println("Valid guest created: " + validGuest);
-        } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-        }
+        System.out.println("Reservation created with status: " + reservation.getStatus());
 
-        // неуспішний випадок: порожнє ім’я
-        try {
-            Guest invalidGuest = new Guest("", "Stone", "invalid@example.com", LocalDate.now().plusDays(1));
-            System.out.println(invalidGuest);
-        } catch (Exception e) {
-            System.out.println("Invalid guest (empty first name): " + e.getMessage());
-        }
+        reservation.setStatus(ReservationStatus.CHECKED_IN);
+        room.setStatus(RoomStatus.OCCUPIED);
 
-        // неуспішний випадок: неправильний email
-        try {
-            Guest invalidEmail = new Guest("Tom", "Green", "wrong_email", LocalDate.now().plusDays(1));
-            System.out.println(invalidEmail);
-        } catch (Exception e) {
-            System.out.println("Invalid guest (email format): " + e.getMessage());
-        }
+        System.out.println("Reservation updated status: " + reservation.getStatus());
+        System.out.println("Room updated status: " + room.getStatus());
 
-        // неуспішний випадок: минула дата
-        try {
-            Guest invalidDate = new Guest("Sara", "Moon", "sara.moon@example.com", LocalDate.now().minusDays(2));
-            System.out.println(invalidDate);
-        } catch (Exception e) {
-            System.out.println("Invalid guest (past date): " + e.getMessage());
-        }
+        System.out.println("\n>>> Demonstrating Switch Expressions:");
 
-        // неуспішний випадок: від’ємна ціна
-        try {
-            Room invalidRoom = new Room(303, "Suite", 2, -200.0);
-            System.out.println(invalidRoom);
-        } catch (Exception e) {
-            System.out.println("Invalid room (negative price): " + e.getMessage());
-        }
+        String roomAction = switch (room.getStatus()) {
+            case AVAILABLE -> "Room is ready for new guests.";
+            case OCCUPIED -> "Room is currently taken.";
+            case CLEANING -> "Housekeeping is working.";
+            case MAINTENANCE -> "Room is closed for repairs.";
+        };
+        System.out.println("Action for Room " + room.getRoomNumber() + ": " + roomAction);
 
-        // --- 3. Форматування та утиліти ---
-        System.out.println("\n>>> Demonstrating formatting using Utils:");
+        double discount = getDiscountByStatus(reservation.getStatus());
+        System.out.println("Applied discount for status " + reservation.getStatus() + ": " + (discount * 100) + "%");
 
-        System.out.println("Email valid? " + Utils.validateEmail("example@mail.com"));
-        System.out.println("Email valid? " + Utils.validateEmail("wrong@@mail"));
+        System.out.println("\n>>> Invoice Calculation:");
+        Invoice invoice = new Invoice(reservation, LocalDate.now());
+        invoice.calculateTotalAmount();
+        System.out.println("Invoice generated for: " + invoice.getReservation().getGuest().lastName());
+        System.out.println("Total Amount to pay: " + invoice.getTotalAmount());
 
-        // --- 4. Різні сценарії використання (успішні / неуспішні) ---
-        System.out.println("\n>>> Demonstrating different use cases:");
+        System.out.println("\n=== END OF LAB 2 DEMONSTRATION ===");
+    }
 
-        // зміна даних через сетери
-        guest1.setLastName("Doe-Smith");
-        room1.setPrice(600.0);
-        System.out.println("Updated guest: " + guest1);
-        System.out.println("Updated room: " + room1);
-
-        // спроба задати некоректну ціну
-        try {
-            room2.setPrice(0);
-        } catch (Exception e) {
-            System.out.println("Unsuccessful case (zero price): " + e.getMessage());
-        }
-
-        System.out.println("\n=== END OF DEMONSTRATION ===");
+    private static double getDiscountByStatus(ReservationStatus status) {
+        return switch (status) {
+            case CONFIRMED -> 0.05;
+            case CHECKED_IN, CANCELED -> 0.0;
+            case CHECKED_OUT -> 0.10;
+        };
     }
 }

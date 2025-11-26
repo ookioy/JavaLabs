@@ -1,42 +1,17 @@
-ЛР 1: Основи Java та модифікатори доступу
+ЛР 2: Enum, Record та Switch-case
 
-Мета: Навчитися створювати базові класи з використанням модифікаторів доступу та принципів ООП (інкапсуляція, спадкування, поліморфізм).
+Мета: Навчитися структурувати дані за допомогою enum та record, використовувати керування потоками виконання через switch-case.
 
 Завдання:
-
-    Створити не менше трьох класів.
-    Створити пакет ua.util із класами:
-    ValidationHelper – package-private, методи перевірки даних;
-    Utils – public, використовує ValidationHelper.
-
-
-Використати модифікатори доступу:
-
-    private – для полів;
-    public – для getter/setter, конструкторів і основних методів;
-    protected – для полів та методів базового класу (якщо потрібен базовий клас);
-    package-private – для допоміжних класів та методів.
-
-
-Реалізувати:
-
-    конструктори (з використанням super() при необхідності);
-    методи toString(), equals(), hashCode();
-    статичні factory-методи для створення об’єктів;
-    валідацію даних у сеттерах та конструкторах.
-
-
+Додати хоча б один enum для представлення певної властивості об’єктів.
+Переробити моделі класів у record.
+Використати switch expressions (Java 14+) для обчислень або обробки значень.
 Створити демонстраційний клас Main, що показує:
 
-    створення об’єктів різними способами;
-    роботу валідації та форматування;
-    доступ до protected та package-private членів;
-    різні сценарії використання класів (успішні та неуспішні).
+    створення об’єктів record і enum;
+    приклади використання switch-case та switch expressions;
+    роботу зі структурованими даними.
 
-7. Hotel Management
-
-    Room: roomNumber, type, capacity, price
-    Guest: firstName, lastName, email, checkInDate
-    Reservation: guest, room, startDate, endDate
-    Service: name, price
-    Invoice: reservation, totalAmount, issueDate
+For the second lab: Convert Guest and Service to record. Add enums:
+    RoomStatus { AVAILABLE, OCCUPIED, CLEANING, MAINTENANCE }
+    ReservationStatus { CONFIRMED, CHECKED_IN, CHECKED_OUT, CANCELED }
