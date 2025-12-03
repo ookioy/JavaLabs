@@ -4,7 +4,6 @@ import ua.exceptions.InvalidDataException;
 import ua.hotel_managment.*;
 import ua.hotel_managment.enums.*;
 import ua.util.FileLoader;
-import ua.test.SimpleTests;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,9 +21,7 @@ public class Main {
 
         System.out.println("=== LAB 3: EXCEPTIONS, FILES & LOGGING ===\n");
 
-        SimpleTests.runTests();
-        System.out.println();
-
+        // Зчитування даних з файлу
         List<Guest> guests;
         try {
             guests = FileLoader.loadGuestsFromFile("guests.csv");

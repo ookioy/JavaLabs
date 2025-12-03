@@ -1,84 +1,8 @@
-Dec 03, 2025 11:43:28 PM ua.test.SimpleTests runTests
-INFO: Running basic tests...
-Dec 03, 2025 11:43:28 PM ua.test.SimpleTests runTests
-INFO: Tests completed.
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
+Dec 04, 2025 12:19:10 AM ua.util.FileLoader loadGuestsFromFile
 INFO: Starting to load guests from file: guests.csv
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 1: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 2: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
+Dec 04, 2025 12:19:10 AM ua.util.FileLoader loadGuestsFromFile
 WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
+Dec 04, 2025 12:19:10 AM ua.util.FileLoader loadGuestsFromFile
 WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 5: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:43:28 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Successfully loaded 0 guests.
-Dec 03, 2025 11:44:14 PM ua.test.SimpleTests runTests
-INFO: Running basic tests...
-Dec 03, 2025 11:44:14 PM ua.test.SimpleTests runTests
-INFO: Tests completed.
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Starting to load guests from file: guests.csv
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 1: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 2: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 5: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:44:14 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Successfully loaded 0 guests.
-Dec 03, 2025 11:45:49 PM ua.test.SimpleTests runTests
-INFO: Running basic tests...
-Dec 03, 2025 11:45:49 PM ua.test.SimpleTests runTests
-INFO: Tests completed.
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Starting to load guests from file: guests.csv
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 1: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 2: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 5: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:45:49 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Successfully loaded 0 guests.
-Dec 03, 2025 11:46:22 PM ua.test.SimpleTests runTests
-INFO: Running basic tests...
-Dec 03, 2025 11:46:22 PM ua.test.SimpleTests runTests
-INFO: Tests completed.
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Starting to load guests from file: guests.csv
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 1: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 2: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 5: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:46:22 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Successfully loaded 0 guests.
-Dec 03, 2025 11:48:37 PM ua.test.SimpleTests runTests
-INFO: Running basic tests...
-Dec 03, 2025 11:48:37 PM ua.test.SimpleTests runTests
-INFO: Tests completed.
-Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
-INFO: Starting to load guests from file: guests.csv
-Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
-Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
-WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
-Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
+Dec 04, 2025 12:19:10 AM ua.util.FileLoader loadGuestsFromFile
 INFO: Successfully loaded 3 guests.
