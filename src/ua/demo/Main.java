@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== LAB 2: RECORDS, ENUMS & SWITCH EXPRESSIONS ===\n");
+        System.out.println("=== LAB 2: RECORDS, ENUMS & SWITCH STATEMENTS ===\n");
 
         System.out.println(">>> Creating Guest and Service (Records):");
 
@@ -34,14 +34,26 @@ public class Main {
         System.out.println("Reservation updated status: " + reservation.getStatus());
         System.out.println("Room updated status: " + room.getStatus());
 
-        System.out.println("\n>>> Demonstrating Switch Expressions:");
+        System.out.println("\n>>> Demonstrating Switch Statements:");
 
-        String roomAction = switch (room.getStatus()) {
-            case AVAILABLE -> "Room is ready for new guests.";
-            case OCCUPIED -> "Room is currently taken.";
-            case CLEANING -> "Housekeeping is working.";
-            case MAINTENANCE -> "Room is closed for repairs.";
-        };
+        String roomAction = "";
+        switch (room.getStatus()) {
+            case AVAILABLE:
+                roomAction = "Room is ready for new guests.";
+                break;
+            case OCCUPIED:
+                roomAction = "Room is currently taken.";
+                break;
+            case CLEANING:
+                roomAction = "Housekeeping is working.";
+                break;
+            case MAINTENANCE:
+                roomAction = "Room is closed for repairs.";
+                break;
+            default:
+                roomAction = "Unknown status.";
+                break;
+        }
         System.out.println("Action for Room " + room.getRoomNumber() + ": " + roomAction);
 
         double discount = getDiscountByStatus(reservation.getStatus());
@@ -57,10 +69,22 @@ public class Main {
     }
 
     private static double getDiscountByStatus(ReservationStatus status) {
-        return switch (status) {
-            case CONFIRMED -> 0.05;
-            case CHECKED_IN, CANCELED -> 0.0;
-            case CHECKED_OUT -> 0.10;
-        };
+        double discount;
+        switch (status) {
+            case CONFIRMED:
+                discount = 0.05;
+                break;
+            case CHECKED_IN:
+            case CANCELED:
+                discount = 0.0;
+                break;
+            case CHECKED_OUT:
+                discount = 0.10;
+                break;
+            default:
+                discount = 0.0;
+                break;
+        }
+        return discount;
     }
 }
