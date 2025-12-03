@@ -3,7 +3,6 @@ package ua.demo;
 import ua.hotel_managment.*;
 import ua.hotel_managment.enums.*;
 import ua.repository.GenericRepository;
-import ua.test.SimpleTests;
 import ua.util.FileLoader;
 
 import java.io.IOException;
@@ -21,8 +20,7 @@ public class Main {
 
         System.out.println("=== LAB 4: GENERICS & REPOSITORY ===\n");
 
-        SimpleTests.runTests();
-        System.out.println();
+        // Юніт-тести запускаються окремо в IDE, тому прибираємо виклик SimpleTests
 
         System.out.println(">>> 1. Creating Generic Repository for Guests:");
         GenericRepository<Guest> guestRepo = new GenericRepository<>(Guest::email);
@@ -37,6 +35,7 @@ public class Main {
         }
 
         System.out.println("\n>>> 2. Creating Generic Repository for Rooms:");
+        // Лямбда-вираз для отримання ID кімнати (номер)
         GenericRepository<Room> roomRepo = new GenericRepository<>(r -> String.valueOf(r.getRoomNumber()));
 
         Room r1 = new Room(101, "Single", 1, 100.0);
