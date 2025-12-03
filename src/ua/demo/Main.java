@@ -1,66 +1,79 @@
 package ua.demo;
 
+import ua.exceptions.InvalidDataException;
 import ua.hotel_managment.*;
 import ua.hotel_managment.enums.*;
+import ua.util.FileLoader;
+import ua.test.SimpleTests;
+
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
-        System.out.println("=== LAB 2: RECORDS, ENUMS & SWITCH EXPRESSIONS ===\n");
+        setupLogging();
 
-        System.out.println(">>> Creating Guest and Service (Records):");
+        System.out.println("=== LAB 3: EXCEPTIONS, FILES & LOGGING ===\n");
 
-        Guest guest = new Guest("John", "Wick", "john@continental.com", LocalDate.now().plusDays(1));
-        System.out.println("Guest Record created: " + guest.firstName() + " " + guest.lastName());
+        SimpleTests.runTests();
+        System.out.println();
 
-        Service spa = new Service("Spa Access", 100);
-        Service dinner = new Service("Gourmet Dinner", 50);
-        System.out.println("Service Record created: " + spa.name() + " ($" + spa.price() + ")");
+        List<Guest> guests;
+        try {
+            guests = FileLoader.loadGuestsFromFile("guests.csv");
+        } catch (InvalidDataException e) {
+            LOGGER.log(Level.SEVERE, "Critical error loading data: " + e.getMessage());
+            System.err.println("Failed to load guests. Exiting.");
+            return;
+        }
 
-        System.out.println("\n>>> Creating Room and Reservation with Enums:");
+        if (guests.isEmpty()) {
+            System.out.println("No guests loaded.");
+        } else {
+            Guest mainGuest = guests.getFirst();
+            System.out.println(">>> Processing Main Guest: " + mainGuest.firstName());
 
-        Room room = new Room(305, "Suite", 2, 500.0, RoomStatus.AVAILABLE);
-        System.out.println("Room created: " + room);
+            Room room = new Room(305, "Suite", 2, 500.0, RoomStatus.AVAILABLE);
+            Reservation reservation = new Reservation(mainGuest, room, LocalDate.now().plusDays(1), LocalDate.now().plusDays(3));
 
-        Reservation reservation = new Reservation(guest, room, LocalDate.now().plusDays(1), LocalDate.now().plusDays(3));
-        reservation.addService(spa);
-        reservation.addService(dinner);
+            System.out.println("Reservation created: " + reservation);
 
-        System.out.println("Reservation created with status: " + reservation.getStatus());
+            processReservationStatus(reservation);
+        }
 
-        reservation.setStatus(ReservationStatus.CHECKED_IN);
-        room.setStatus(RoomStatus.OCCUPIED);
-
-        System.out.println("Reservation updated status: " + reservation.getStatus());
-        System.out.println("Room updated status: " + room.getStatus());
-
-        System.out.println("\n>>> Demonstrating Switch Expressions:");
-
-        String roomAction = switch (room.getStatus()) {
-            case AVAILABLE -> "Room is ready for new guests.";
-            case OCCUPIED -> "Room is currently taken.";
-            case CLEANING -> "Housekeeping is working.";
-            case MAINTENANCE -> "Room is closed for repairs.";
-        };
-        System.out.println("Action for Room " + room.getRoomNumber() + ": " + roomAction);
-
-        double discount = getDiscountByStatus(reservation.getStatus());
-        System.out.println("Applied discount for status " + reservation.getStatus() + ": " + (discount * 100) + "%");
-
-        System.out.println("\n>>> Invoice Calculation:");
-        Invoice invoice = new Invoice(reservation, LocalDate.now());
-        invoice.calculateTotalAmount();
-        System.out.println("Invoice generated for: " + invoice.getReservation().getGuest().lastName());
-        System.out.println("Total Amount to pay: " + invoice.getTotalAmount());
-
-        System.out.println("\n=== END OF LAB 2 DEMONSTRATION ===");
+        System.out.println("\n=== END OF LAB 3 DEMONSTRATION ===");
     }
 
-    private static double getDiscountByStatus(ReservationStatus status) {
-        return switch (status) {
-            case CONFIRMED -> 0.05;
-            case CHECKED_IN, CANCELED -> 0.0;
-            case CHECKED_OUT -> 0.10;
-        };
+    private static void setupLogging() {
+        try {
+            FileHandler fileHandler = new FileHandler("application.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            Logger rootLogger = Logger.getLogger("");
+            rootLogger.addHandler(fileHandler);
+            rootLogger.setLevel(Level.INFO);
+        } catch (IOException e) {
+            System.err.println("Failed to setup logger: " + e.getMessage());
+        }
+    }
+
+    private static void processReservationStatus(Reservation reservation) {
+        switch (reservation.getStatus()) {
+            case CONFIRMED:
+                System.out.println("Status: Confirmed. Waiting for check-in.");
+                break;
+            case CHECKED_IN:
+                System.out.println("Status: Checked In. Guest is in the room.");
+                break;
+            default:
+                System.out.println("Status: Other.");
+                break;
+        }
     }
 }
