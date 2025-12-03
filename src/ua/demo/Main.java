@@ -1,14 +1,13 @@
 package ua.demo;
 
-import ua.exceptions.InvalidDataException;
 import ua.hotel_managment.*;
 import ua.hotel_managment.enums.*;
-import ua.util.FileLoader;
+import ua.repository.GenericRepository;
 import ua.test.SimpleTests;
+import ua.util.FileLoader;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,35 +19,52 @@ public class Main {
     public static void main(String[] args) {
         setupLogging();
 
-        System.out.println("=== LAB 3: EXCEPTIONS, FILES & LOGGING ===\n");
+        System.out.println("=== LAB 4: GENERICS & REPOSITORY ===\n");
 
         SimpleTests.runTests();
         System.out.println();
 
-        List<Guest> guests;
+        System.out.println(">>> 1. Creating Generic Repository for Guests:");
+        GenericRepository<Guest> guestRepo = new GenericRepository<>(Guest::email);
+
         try {
-            guests = FileLoader.loadGuestsFromFile("guests.csv");
-        } catch (InvalidDataException e) {
-            LOGGER.log(Level.SEVERE, "Critical error loading data: " + e.getMessage());
-            System.err.println("Failed to load guests. Exiting.");
-            return;
+            var guestsFromFile = FileLoader.loadGuestsFromFile("guests.csv");
+            for (Guest g : guestsFromFile) {
+                guestRepo.add(g);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading initial data: " + e.getMessage());
         }
 
-        if (guests.isEmpty()) {
-            System.out.println("No guests loaded.");
-        } else {
-            Guest mainGuest = guests.getFirst();
-            System.out.println(">>> Processing Main Guest: " + mainGuest.firstName());
+        System.out.println("\n>>> 2. Creating Generic Repository for Rooms:");
+        GenericRepository<Room> roomRepo = new GenericRepository<>(r -> String.valueOf(r.getRoomNumber()));
 
-            Room room = new Room(305, "Suite", 2, 500.0, RoomStatus.AVAILABLE);
-            Reservation reservation = new Reservation(mainGuest, room, LocalDate.now().plusDays(1), LocalDate.now().plusDays(3));
+        Room r1 = new Room(101, "Single", 1, 100.0);
+        Room r2 = new Room(102, "Double", 2, 150.0);
+        Room r3 = new Room(101, "Single Duplicated", 1, 100.0);
 
-            System.out.println("Reservation created: " + reservation);
+        roomRepo.add(r1);
+        roomRepo.add(r2);
+        System.out.println("Attempting to add duplicate Room 101:");
+        roomRepo.add(r3);
 
-            processReservationStatus(reservation);
+        System.out.println("\n>>> 3. Searching by Identity:");
+        Guest foundGuest = guestRepo.findByIdentity("john@continental.com");
+        if (foundGuest != null) {
+            System.out.println("Found Guest: " + foundGuest.firstName() + " " + foundGuest.lastName());
         }
 
-        System.out.println("\n=== END OF LAB 3 DEMONSTRATION ===");
+        Room foundRoom = roomRepo.findByIdentity("102");
+        if (foundRoom != null) {
+            System.out.println("Found Room: " + foundRoom.getRoomNumber() + " (" + foundRoom.getType() + ")");
+        }
+
+        System.out.println("\n>>> 4. Listing All Items in Room Repository:");
+        for (Room r : roomRepo.getAll()) {
+            System.out.println(r);
+        }
+
+        System.out.println("\n=== END OF LAB 4 DEMONSTRATION ===");
     }
 
     private static void setupLogging() {
@@ -60,20 +76,6 @@ public class Main {
             rootLogger.setLevel(Level.INFO);
         } catch (IOException e) {
             System.err.println("Failed to setup logger: " + e.getMessage());
-        }
-    }
-
-    private static void processReservationStatus(Reservation reservation) {
-        switch (reservation.getStatus()) {
-            case CONFIRMED:
-                System.out.println("Status: Confirmed. Waiting for check-in.");
-                break;
-            case CHECKED_IN:
-                System.out.println("Status: Checked In. Guest is in the room.");
-                break;
-            default:
-                System.out.println("Status: Other.");
-                break;
         }
     }
 }

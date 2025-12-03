@@ -82,3 +82,39 @@ Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
 WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
 Dec 03, 2025 11:48:37 PM ua.util.FileLoader loadGuestsFromFile
 INFO: Successfully loaded 3 guests.
+Dec 03, 2025 11:53:10 PM ua.test.SimpleTests runTests
+INFO: Running basic tests...
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: repo@test.com
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository findByIdentity
+INFO: Item found with ID: repo@test.com
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: dup@test.com
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+WARNING: Duplicate item found with ID: dup@test.com. Item was not added.
+Dec 03, 2025 11:53:10 PM ua.test.SimpleTests runTests
+INFO: Tests completed.
+Dec 03, 2025 11:53:10 PM ua.util.FileLoader loadGuestsFromFile
+INFO: Starting to load guests from file: guests.csv
+Dec 03, 2025 11:53:10 PM ua.util.FileLoader loadGuestsFromFile
+WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
+Dec 03, 2025 11:53:10 PM ua.util.FileLoader loadGuestsFromFile
+WARNING: Skipping invalid line 4: Validation failed: Check-in date cannot be in the past
+Dec 03, 2025 11:53:10 PM ua.util.FileLoader loadGuestsFromFile
+INFO: Successfully loaded 3 guests.
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: john@continental.com
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: sarah.connor@sky.net
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: alice@wonder.land
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: 101
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+INFO: Item added with ID: 102
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository add
+WARNING: Duplicate item found with ID: 101. Item was not added.
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository findByIdentity
+INFO: Item found with ID: john@continental.com
+Dec 03, 2025 11:53:10 PM ua.repository.GenericRepository findByIdentity
+INFO: Item found with ID: 102

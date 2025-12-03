@@ -1,6 +1,7 @@
 package ua.test;
 
 import ua.hotel_managment.Guest;
+import ua.repository.GenericRepository;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
@@ -12,6 +13,8 @@ public class SimpleTests {
         testValidGuestCreation();
         testInvalidGuestEmail();
         testPastDateGuest();
+        testRepositoryAddAndFind();
+        testRepositoryDuplicate();
         LOGGER.info("Tests completed.");
     }
 
@@ -45,6 +48,32 @@ public class SimpleTests {
             System.out.println("[PASS] Past date caught: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("[FAIL] Unexpected exception type: " + e.getClass().getSimpleName());
+        }
+    }
+
+    private static void testRepositoryAddAndFind() {
+        GenericRepository<Guest> repo = new GenericRepository<>(Guest::email);
+        Guest g = new Guest("Repo", "Tester", "repo@test.com", LocalDate.now().plusDays(1));
+        repo.add(g);
+        Guest found = repo.findByIdentity("repo@test.com");
+        if (found != null && found.equals(g)) {
+            System.out.println("[PASS] Repository Add and Find");
+        } else {
+            System.err.println("[FAIL] Repository could not find added item");
+        }
+    }
+
+    private static void testRepositoryDuplicate() {
+        GenericRepository<Guest> repo = new GenericRepository<>(Guest::email);
+        Guest g1 = new Guest("Repo", "Tester", "dup@test.com", LocalDate.now().plusDays(1));
+        Guest g2 = new Guest("Repo", "Tester", "dup@test.com", LocalDate.now().plusDays(2));
+        repo.add(g1);
+        repo.add(g2);
+
+        if (repo.getAll().size() == 1) {
+            System.out.println("[PASS] Repository handled duplicate");
+        } else {
+            System.err.println("[FAIL] Repository allowed duplicate keys");
         }
     }
 }
