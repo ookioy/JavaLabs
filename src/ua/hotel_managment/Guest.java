@@ -3,7 +3,8 @@ package ua.hotel_managment;
 import java.time.LocalDate;
 import ua.util.Utils;
 
-public record Guest(String firstName, String lastName, String email, LocalDate checkInDate) {
+public record Guest(String firstName, String lastName, String email, LocalDate checkInDate)
+        implements Comparable<Guest> {
 
     public Guest {
         if (!Utils.validateObject(firstName) || !Utils.validateString(firstName)) {
@@ -19,9 +20,12 @@ public record Guest(String firstName, String lastName, String email, LocalDate c
         }
         if (!Utils.validateObject(checkInDate)) {
             throw new NullPointerException("Check-in date cannot be null");
-        } else if (!Utils.validateDate(checkInDate, LocalDate.now())) {
-            throw new IllegalArgumentException("Check-in date cannot be in the past");
         }
+    }
+
+    @Override
+    public int compareTo(Guest other) {
+        return this.lastName.compareToIgnoreCase(other.lastName);
     }
 
     public static Guest create(String firstName, String lastName, String email, LocalDate checkInDate) {

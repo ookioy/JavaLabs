@@ -22,3 +22,29 @@ Dec 04, 2025 12:26:27 AM ua.repository.GenericRepository findByIdentity
 INFO: Item found with ID: john@continental.com
 Dec 04, 2025 12:26:27 AM ua.repository.GenericRepository findByIdentity
 INFO: Item found with ID: 102
+Dec 04, 2025 12:35:48 AM ua.util.FileLoader loadGuestsFromFile
+INFO: Starting to load guests from file: guests.csv
+Dec 04, 2025 12:35:48 AM ua.util.FileLoader loadGuestsFromFile
+WARNING: Skipping invalid line 3: Validation failed: Email format is invalid
+Dec 04, 2025 12:35:48 AM ua.util.FileLoader loadGuestsFromFile
+INFO: Successfully loaded 4 guests.
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: john@continental.com
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: sarah.connor@sky.net
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: late@guest.com
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: alice@wonder.land
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository sortByIdentity
+INFO: Sorting by Identity (desc)
+Dec 04, 2025 12:35:48 AM ua.repository.GuestRepository sortByFirstName
+INFO: Sorting guests by First Name
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: 305
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: 101
+Dec 04, 2025 12:35:48 AM ua.repository.GenericRepository add
+INFO: Item added with ID: 202
+Dec 04, 2025 12:35:48 AM ua.repository.RoomRepository sortByPrice
+INFO: Sorting rooms by Price

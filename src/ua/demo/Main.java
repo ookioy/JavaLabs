@@ -1,69 +1,56 @@
 package ua.demo;
 
-import ua.hotel_managment.*;
-import ua.hotel_managment.enums.*;
-import ua.repository.GenericRepository;
+import ua.hotel_managment.Guest;
+import ua.hotel_managment.Room;
+import ua.repository.GuestRepository;
+import ua.repository.RoomRepository;
 import ua.util.FileLoader;
-
-import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.io.IOException;
 
 public class Main {
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-
     public static void main(String[] args) {
         setupLogging();
 
-        System.out.println("=== LAB 4: GENERICS & REPOSITORY ===\n");
+        System.out.println("=== LAB 5: COLLECTIONS & SORTING ===\n");
 
-        // Юніт-тести запускаються окремо в IDE, тому прибираємо виклик SimpleTests
-
-        System.out.println(">>> 1. Creating Generic Repository for Guests:");
-        GenericRepository<Guest> guestRepo = new GenericRepository<>(Guest::email);
+        System.out.println(">>> Guest Repository Operations:");
+        GuestRepository guestRepo = new GuestRepository();
 
         try {
-            var guestsFromFile = FileLoader.loadGuestsFromFile("guests.csv");
-            for (Guest g : guestsFromFile) {
-                guestRepo.add(g);
-            }
+            var guests = FileLoader.loadGuestsFromFile("guests.csv");
+            guests.forEach(guestRepo::add);
         } catch (Exception e) {
-            System.err.println("Error loading initial data: " + e.getMessage());
+            System.out.println("Error loading file: " + e.getMessage());
         }
 
-        System.out.println("\n>>> 2. Creating Generic Repository for Rooms:");
-        // Лямбда-вираз для отримання ID кімнати (номер)
-        GenericRepository<Room> roomRepo = new GenericRepository<>(r -> String.valueOf(r.getRoomNumber()));
+        System.out.println("\n-- Sorted by Identity (Email) DESC --");
+        List<Guest> byEmail = guestRepo.sortByIdentity("desc");
+        byEmail.forEach(g -> System.out.println(g.email() + " : " + g.lastName()));
 
-        Room r1 = new Room(101, "Single", 1, 100.0);
-        Room r2 = new Room(102, "Double", 2, 150.0);
-        Room r3 = new Room(101, "Single Duplicated", 1, 100.0);
+        System.out.println("\n-- Sorted by First Name (Method Ref) --");
+        guestRepo.sortByFirstName().forEach(g -> System.out.println(g.firstName()));
 
-        roomRepo.add(r1);
-        roomRepo.add(r2);
-        System.out.println("Attempting to add duplicate Room 101:");
-        roomRepo.add(r3);
+        System.out.println("\n>>> Room Repository Operations:");
+        RoomRepository roomRepo = new RoomRepository();
+        roomRepo.add(new Room(305, "Suite", 4, 500.0));
+        roomRepo.add(new Room(101, "Single", 1, 100.0));
+        roomRepo.add(new Room(202, "Double", 2, 200.0));
 
-        System.out.println("\n>>> 3. Searching by Identity:");
-        Guest foundGuest = guestRepo.findByIdentity("john@continental.com");
-        if (foundGuest != null) {
-            System.out.println("Found Guest: " + foundGuest.firstName() + " " + foundGuest.lastName());
-        }
+        System.out.println("\n-- Natural Order (Comparable: Room Number) --");
+        List<Room> rooms = roomRepo.getAll();
+        Collections.sort(rooms);
+        rooms.forEach(System.out::println);
 
-        Room foundRoom = roomRepo.findByIdentity("102");
-        if (foundRoom != null) {
-            System.out.println("Found Room: " + foundRoom.getRoomNumber() + " (" + foundRoom.getType() + ")");
-        }
+        System.out.println("\n-- Sorted by Price (Custom Comparator) --");
+        roomRepo.sortByPrice().forEach(System.out::println);
 
-        System.out.println("\n>>> 4. Listing All Items in Room Repository:");
-        for (Room r : roomRepo.getAll()) {
-            System.out.println(r);
-        }
-
-        System.out.println("\n=== END OF LAB 4 DEMONSTRATION ===");
+        System.out.println("\n=== END OF LAB 5 DEMONSTRATION ===");
     }
 
     private static void setupLogging() {

@@ -4,7 +4,7 @@ import java.util.Objects;
 import ua.util.Utils;
 import ua.hotel_managment.enums.RoomStatus;
 
-public class Room {
+public class Room implements Comparable<Room> {
 
     private int roomNumber;
     private String type;
@@ -85,6 +85,11 @@ public class Room {
             throw new NullPointerException("Room status cannot be null");
         }
         this.status = status;
+    }
+
+    @Override
+    public int compareTo(Room other) {
+        return Integer.compare(this.roomNumber, other.roomNumber);
     }
 
     @Override

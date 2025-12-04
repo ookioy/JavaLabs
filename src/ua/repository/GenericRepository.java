@@ -1,15 +1,13 @@
 package ua.repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class GenericRepository<T> {
-    private static final Logger LOGGER = Logger.getLogger(GenericRepository.class.getName());
-    private final Map<String, T> storage = new HashMap<>();
-    private final IdentityExtractor<T> extractor;
+    protected static final Logger LOGGER = Logger.getLogger(GenericRepository.class.getName());
+    protected final Map<String, T> storage = new HashMap<>();
+    protected final IdentityExtractor<T> extractor;
 
     public GenericRepository(IdentityExtractor<T> extractor) {
         this.extractor = extractor;
@@ -46,5 +44,18 @@ public class GenericRepository<T> {
 
     public List<T> getAll() {
         return new ArrayList<>(storage.values());
+    }
+
+    public List<T> sortByIdentity(String order) {
+        Comparator<T> comparator = Comparator.comparing(extractor::extract);
+
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+
+        LOGGER.info("Sorting by Identity (" + order + ")");
+        return storage.values().stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 }
